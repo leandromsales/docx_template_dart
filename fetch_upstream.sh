@@ -41,15 +41,6 @@ git fetch $ALEXANDRE_REMOTE_ORIGIN
 
 git config --global pager.log false
 
-(git log --pretty=format:"%H" ${PAVEL_REMOTE_ORIGIN}/master..${ALEXANDRE_REMOTE_ORIGIN}/master; echo "") | while read commit; do
-	if [ ! -z "$commit" ]; then
-		if ! git merge-base --is-ancestor $commit HEAD; then
-			echo "Cherrying pick commit $commit"
-			#git cherry-pick $commit
-		fi
-	fi
-done
-
 git stash
 
 git checkout master
@@ -57,6 +48,15 @@ git checkout master
 git merge upstream/master
 
 git merge alexandre/master
+
+(git log --pretty=format:"%H" ${PAVEL_REMOTE_ORIGIN}/master..${ALEXANDRE_REMOTE_ORIGIN}/master; echo "") | while read commit; do
+	if [ ! -z "$commit" ]; then
+		if ! git merge-base --is-ancestor $commit HEAD; then
+			echo "Cherrying pick commit $commit"
+			git cherry-pick $commit
+		fi
+	fi
+done
 
 git push -f origin master
 
