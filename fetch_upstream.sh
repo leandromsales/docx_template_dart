@@ -50,15 +50,15 @@ git config --global pager.log false
 	fi
 done
 
-exit
+git stash
 
 git checkout master
 
 git merge upstream/master
 
-git push -f origin master
+git merge alexandre/master
 
-git stash
+git push -f origin master
 
 cd ../../..
 
