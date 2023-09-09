@@ -21,6 +21,7 @@ then
 else
 	SCRIPTDIR="$(cd "$(dirname "$0")" && pwd)"
 fi
+trap "cd \"$CURR_DIR\"" EXIT
 
 cd "$SCRIPTDIR"
 
@@ -66,6 +67,8 @@ git add "$SCRIPTDIR"
 
 git commit -m "Updated ${SCRIPTDIR} to latest from original repository"
 
-cd "$CURR_DIR" > /dev/null
+cd "$SCRIPT_DIR" > /dev/null
 
 git stash pop
+
+cd "$CURR_DIR" > /dev/null
